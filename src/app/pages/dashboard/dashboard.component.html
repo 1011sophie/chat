@@ -1,0 +1,39 @@
+<div class="container-fluid" *ngIf="store.user">
+    <div class="row">
+        <div class="col-xs-3">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Users</div>
+                <div class="panel-body">
+                    Hello {{ store.user.name }}
+                    <button class="btn btn-primary" (click)="store.logout()">Logout</button>
+                </div>
+                <ul class="list-group">
+                    <li class="list-group-item" *ngFor="let user of users" (click)="openChat(user)">{{ user.name }} {{ user.unreadMessageCount }}
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-xs-9">
+            <div class="panel panel-primary" *ngIf="recipient">
+                <div class="panel-heading">chat with {{ recipient.name }}</div>
+                <ul class="list-group">
+                    <li class="list-group-item" *ngFor="let message of recipient.messages">
+                        {{ message.sender.name + ' - ' + message.text }}
+                        <span *ngIf="message.sender.id==store.user.id&&message.seen" class="seen">seen</span>
+                    </li>
+                </ul>
+                <div class="panel-body">
+                    <div class="col-xs-9">
+                        <div class="form-group">
+                            <label for="message-text-input">Message: </label>
+                            <input id="message-text-input" type="text" class="form-control" [(ngModel)]="messageText">
+                        </div>
+                    </div>
+                    <div class="col-xs-3">
+                        <button class="btn btn-primary" (click)="sendMessage()">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
